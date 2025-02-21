@@ -58,6 +58,11 @@ app.post('/api/moro', (req, res) => {
 
 // TODO: lisää oma reitti ja toiminnallisuus omaa mielikuvitusta käyttäen, niin
 // ensimmäisen viikon harkka ok
+// Uusi reitti tervehtimään käyttäjää nimellä
+app.get('/api/hello/:name', (req, res) => {
+  const name = req.params.name;
+  res.json({ greeting: `Hei ${name}!` });
+});
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
