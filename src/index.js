@@ -1,21 +1,42 @@
 import express from 'express';
+import {addItem, deleteItem, editItem, getItemById, getItems} from './items.js';
+import {addUser, getUsers,getUserById, login} from './users.js';
+import cors from 'cors';
 const hostname = '127.0.0.1';
 const app = express();
 const port = 3000;
 
+// tätä tarvitaan, jotta Ullan fronttiharjoitukset toimivat (Vite)
+// lisää myös: import cors from 'cors'; tiedoston yläosaan
+// ja asenna paketti: npm install cors
+app.use(cors());
+
 // Staattinen html-sivusto tarjoillaan palvelimen juuressa
 app.use('/', express.static('public'));
-
 // middleware, joka lukee json data POST-pyyntöjen rungosta (body)
 app.use(express.json());
-
 // rest-apin resurssit tarjoillaan /api/-polun alla
 app.get('/api/', (req, res) => {
-  console.log('get-pyyntö juureen havaittu');
+  console.log('get-pyyntö apin juureen havaittu');
   console.log(req.url);
   res.send('Welcome to my REST API!');
 });
 
+// Items resurssin päätepisteet (endpoint)
+app.get('/api/items', getItems);
+app.get('/api/items/:id', getItemById);
+app.post('/api/items', addItem);
+app.put('/api/items/:id', editItem);
+app.delete('/api/items/:id', deleteItem);
+
+// Users resurssin päätepisteet
+app.get('/api/users', getUsers);
+app.get('/api/users/:id', getUserById);
+app.post('/api/users', addUser);
+app.post('/api/users/login', login);
+
+// Alla olevat eivät ole varsinaisia sovelluksessa tarvittavia ominaisuuksia,
+// mutta säästetty esimerkkeinä expressin toiminnasta
 // syötteen lukeminen reittiparametreista (route params)
 app.get('/api/sum/:num1/:num2', (req, res) => {
   console.log(req.params);
