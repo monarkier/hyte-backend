@@ -18,7 +18,7 @@ const insertEntry = async (entry) => {
 const selectEntriesByUserId = async (userId) => {
   try {
     const [rows] = await promisePool.query(
-      'SELECT sleep_duration, sleep_quality, dream_description, ai_analysis, created_at FROM DiaryEntries WHERE user_id=?',
+      'SELECT sleep_duration, sleep_quality, dream_description, created_at FROM DiaryEntries WHERE user_id=?',
       [userId],
     );
     console.log(userId)
