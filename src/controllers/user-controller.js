@@ -56,7 +56,6 @@ const addUser = async (req, res, next) => {
   }
 };
 
-// Userin poisto id:n perusteella (TODO: käytä DB)
 const deleteUser = async (req, res, next) => {
   console.log('deleteUser', req.params.id);
   const userId = req.params.id;

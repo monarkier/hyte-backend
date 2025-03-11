@@ -81,9 +81,9 @@ const insertUser = async (user) => {
  */
 const removeUser = async (userId) => {
   try {
-    await promisePool.query('DELETE FROM diaryentries WHERE user_id = ?', [userId]);
-    await promisePool.query('DELETE FROM exercises WHERE user_id = ?', [userId]);
-    await promisePool.query('DELETE FROM mood WHERE user_id = ?', [userId]);
+    await promisePool.query('DELETE FROM DiaryEntries WHERE user_id = ?', [userId]);
+    await promisePool.query('DELETE FROM Exercises WHERE user_id = ?', [userId]);
+    await promisePool.query('DELETE FROM Mood WHERE user_id = ?', [userId]);
     const [result] = await promisePool.query(
       'DELETE FROM Users WHERE user_id = ?',
       [userId]
