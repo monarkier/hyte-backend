@@ -3,7 +3,6 @@ import {body} from 'express-validator';
 import {
   addUser,
   deleteUser,
-  editUser,
   getUserById,
   getUsers,
 } from '../controllers/user-controller.js';
@@ -25,6 +24,6 @@ userRouter
   );
 
 // all routes to /api/users/:id
-userRouter.route('/:id').get(getUserById).put(editUser).delete(deleteUser);
+userRouter.route('/:id').get(getUserById).delete(deleteUser);
 
 export default userRouter;

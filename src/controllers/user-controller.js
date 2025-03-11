@@ -1,11 +1,9 @@
 import bcrypt from 'bcryptjs';
-import {validationResult} from 'express-validator';
 import {
   insertUser,
   selectAllUsers,
   selectUserById,
   removeUser,
-  updateUser,
 } from '../models/user-model.js';
 import {customError} from '../middlewares/error-handler.js';
 
@@ -58,29 +56,6 @@ const addUser = async (req, res, next) => {
   }
 };
 
-// Userin muokkaus id:n perusteella (TODO: käytä DB)
-const editUser = async (req, res, next) => {
-  console.log('editUser request body', req.body);
-  const userId = req.params.id;
-  const { username, password, email } = req.body;
-  try {
-    const user = await selectUserById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    const success = await updateUser(userId, { username, email, password});
-
-    if (success) {
-      res.json({ message: 'User updated.' });
-    } else {
-      res.status(400).json({ message: 'User update failed.' });
-    }
-  } catch (error) {
-    next(error);
-  }
-};
-
 // Userin poisto id:n perusteella (TODO: käytä DB)
 const deleteUser = async (req, res, next) => {
   console.log('deleteUser', req.params.id);
@@ -103,4 +78,4 @@ const deleteUser = async (req, res, next) => {
 
 };
 
-export {getUsers, getUserById, addUser, editUser, deleteUser};
+export {getUsers, getUserById, addUser, deleteUser};

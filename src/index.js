@@ -1,12 +1,16 @@
 import express from 'express';
-import {addItem, deleteItem, editItem, getItemById, getItems} from './items.js';
-import {addUser, getUsers,getUserById, login} from './users.js';
 import cors from 'cors';
+import userRouter from './routes/user-router.js';
+import authRouter from './routes/auth-router.js';
+import entryRouter from './routes/entry-router.js';
+import exerciseRouter from './routes/exercise-router.js';
+import moodRouter from './routes/mood-router.js';
+import {errorHandler, notFoundHandler} from './middlewares/error-handler.js';
 const hostname = '127.0.0.1';
 const app = express();
 const port = 3000;
 
-// tätä tarvitaan, jotta Ullan fronttiharjoitukset toimivat (Vite)
+// middleware, mitä tarvitaan, jotta Ullan fronttiharjoitukset toimivat (Vite)
 // lisää myös: import cors from 'cors'; tiedoston yläosaan
 // ja asenna paketti: npm install cors
 app.use(cors());
@@ -15,76 +19,27 @@ app.use(cors());
 app.use('/', express.static('public'));
 // middleware, joka lukee json data POST-pyyntöjen rungosta (body)
 app.use(express.json());
-// rest-apin resurssit tarjoillaan /api/-polun alla
-app.get('/api/', (req, res) => {
-  console.log('get-pyyntö apin juureen havaittu');
-  console.log(req.url);
-  res.send('Welcome to my REST API!');
-});
 
-// Items resurssin päätepisteet (endpoint)
-app.get('/api/items', getItems);
-app.get('/api/items/:id', getItemById);
-app.post('/api/items', addItem);
-app.put('/api/items/:id', editItem);
-app.delete('/api/items/:id', deleteItem);
+// rest-apin dokumentaatio tarjoillaan /api-juuripolun alla
+app.use('/api', express.static('docs'));
 
-// Users resurssin päätepisteet
-app.get('/api/users', getUsers);
-app.get('/api/users/:id', getUserById);
-app.post('/api/users', addUser);
-app.post('/api/users/login', login);
+// Users resurssin päätepisteet (endpoints)
+app.use('/api/users', userRouter);
+// käyttäjäautentikaatio (kirjautuminen)
+app.use('/api/auth', authRouter);
+// unipäiväkirjamerkinnät
+app.use('/api/entries', entryRouter);
+//treenimerkinnät
+app.use('/api/exercises', exerciseRouter);
+//mielialamerkinnät
+app.use('/api/moods', moodRouter);
 
-// Alla olevat eivät ole varsinaisia sovelluksessa tarvittavia ominaisuuksia,
-// mutta säästetty esimerkkeinä expressin toiminnasta
-// syötteen lukeminen reittiparametreista (route params)
-app.get('/api/sum/:num1/:num2', (req, res) => {
-  console.log(req.params);
-  const num1 = Number(req.params.num1);
-  const num2 = Number(req.params.num2);
-  // testataan, jos jompikumpi luvuista ei ole numero, niin lähetään
-  // virhetilakoodi ja viesti json-muodossa
-  if(isNaN(num1) || isNaN(num2)) {
-    res.status(400);
-    res.json({
-      error: 'Both parameters must be numbers!'
-    });
-    return;
-  }
-  res.json({
-    num1,
-    num2,
-    sum: num1 + num2
-  });
-});
+// 404 virheitä varten
+app.use(notFoundHandler);
+// yleinen virhevastausten lähettäjä kaikkia virhetilanteita varten
+app.use(errorHandler);
 
-// syötteen lukeminen kyselyparametreista (query params)
-app.get('/api/sum/', (req, res) => {
-  console.log(req.query);
-  const num1 = parseInt(req.query.num1);
-  const num2 = parseInt(req.query.num2);
-  res.json({
-    num1,
-    num2,
-    sum: num1 + num2
-  });
-});
-
-// POST-pynnön käsittely ja datan lukeminen pyynnön bodystä
-app.post('/api/moro', (req, res) => {
-  console.log(req.body);
-  res.status(200);
-  res.json({reply: 'no Moro ' + req.body.sender});
-});
-
-// TODO: lisää oma reitti ja toiminnallisuus omaa mielikuvitusta käyttäen, niin
-// ensimmäisen viikon harkka ok
-// Uusi reitti tervehtimään käyttäjää nimellä
-app.get('/api/hello/:name', (req, res) => {
-  const name = req.params.name;
-  res.json({ greeting: `Hei ${name}!` });
-});
-
+// palvelimen käynnistys lopuksi kaikkien määritysten jälkeen
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });

@@ -35,47 +35,6 @@ const selectUserById = async (userId) => {
 };
 
 /**
- * User registration
- * @param {*} user
- * @returns
- */
-const insertUser = async (user) => {
-  // try {
-    const [result] = await promisePool.query(
-      'INSERT INTO Users (username, password, email) VALUES (?, ?, ?)',
-      [user.username, user.password, user.email],
-    );
-    console.log('insertUser', result);
-    // return only first item of the result array
-    return result.insertId;
-  // } catch (error) {
-  //   console.error(error);
-  //   throw new Error('database error');
-  // }
-};
-
-/**
- * UNSAFE login for clear text passwords
- * @param {*} username
- * @param {*} password
- * @returns
- */
-const selectUserByNameAndPassword = async (username, password) => {
-  try {
-    const [rows] = await promisePool.query(
-      'SELECT user_id, username, email, created_at, user_level FROM Users WHERE username=? AND password=?',
-      [username, password],
-    );
-    console.log(rows);
-    // return only first item of the result array
-    return rows[0];
-  } catch (error) {
-    console.error(error);
-    throw new Error('database error');
-  }
-};
-
-/**
  * Fetch all user data based on user's username
  * @param {*} username
  * @returns {object} user data
@@ -96,15 +55,38 @@ const selectUserByUsername = async (username) => {
 };
 
 /**
+ * User registration
+ * @param {*} user
+ * @returns
+ */
+const insertUser = async (user) => {
+  // try {
+    const [result] = await promisePool.query(
+      'INSERT INTO Users (username, password, email) VALUES (?, ?, ?)',
+      [user.username, user.password, user.email],
+    );
+    console.log('insertUser', result);
+    // return only first item of the result array
+    return result.insertId;
+  // } catch (error) {
+  //   console.error(error);
+  //   throw new Error('database error');
+  // }
+};
+
+/**
  * Remove user by ID
  * @param {number} userId - ID of the user to be deleted
  * @returns {Promise<boolean>} - True if a row was deleted, false otherwise
  */
 const removeUser = async (userId) => {
   try {
+    await promisePool.query('DELETE FROM diaryentries WHERE user_id = ?', [userId]);
+    await promisePool.query('DELETE FROM exercises WHERE user_id = ?', [userId]);
+    await promisePool.query('DELETE FROM mood WHERE user_id = ?', [userId]);
     const [result] = await promisePool.query(
       'DELETE FROM Users WHERE user_id = ?',
-      [userId],
+      [userId]
     );
     console.log('removeUser result:', result);
     return result.affectedRows > 0; // Palauttaa true, jos jotain poistettiin
@@ -114,35 +96,10 @@ const removeUser = async (userId) => {
   }
 };
 
-/**
- * Update user information by ID
- * @param {number} userId - ID of the user to be updated
- * @param {object} userData - Object containing updated user data
- * @returns {Promise<boolean>} - True if a row was updated, false otherwise
- */
-const updateUser = async (userId, userData) => {
-  try {
-    const { username, email, user_level } = userData;
-
-    const [result] = await promisePool.query(
-      'UPDATE Users SET username = ?, email = ?, user_level = ? WHERE user_id = ?',
-      [username, email, user_level, userId],
-    );
-
-    console.log('updateUser result:', result);
-    return result.affectedRows > 0; // Palauttaa true, jos jotain päivitettiin
-  } catch (error) {
-    console.error('Database error:', error);
-    throw new Error('database error');
-  }
-};
-
 export {
   selectAllUsers,
   selectUserById,
-  insertUser,
-  selectUserByNameAndPassword,
   selectUserByUsername,
+  insertUser,
   removeUser,
-  updateUser,
 };

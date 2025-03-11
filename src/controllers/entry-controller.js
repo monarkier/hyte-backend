@@ -1,7 +1,7 @@
 import {insertEntry, selectEntriesByUserId} from '../models/entry-model.js';
 
 const postEntry = async (req, res, next) => {
-  // user_id, entry_date, mood, weight, sleep_hours, notes
+
   const newEntry = req.body;
   newEntry.user_id = req.user.user_id;
   try {
