@@ -1,11 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test web page</title>
-</head>
-<body>
-  <h1>Tämä on testisivu.</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../src/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terveyspäiväkirja</title>
+    <script type="module" crossorigin src="/assets/main-DjICiPmQ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/fetch-DP51Om_7.js">
+    <link rel="stylesheet" crossorigin href="/assets/fetch-CuXF06t9.css">
+  </head>
+  <body>
+    <div class="content-container">
+
+    <div class="loginForm">
+      <form class="loginForm">
+        <label for="username">Käyttäjänimi</label>
+        <input type="text" name="username" placeholder="testikayttaja" value="testikayttaja" />
+        <label for="password">Salasana</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="salasana"
+          value="salasana"
+        />
+        <input
+          name="submit"
+          type="submit"
+          value="Kirjaudu sisään"
+          class="loginform"
+        />
+      </form>
+      <button id="showRegister">Uusi käyttäjä?</button>
+    </div>
+
+    <div class="registerForm hidden">
+      <form class="registerForm">
+        <label for="username">Käyttäjänimi</label>
+        <input
+          id="username"
+          type="text"
+          name="username"
+          placeholder="Uusi käyttäjä"
+        />
+        <label for="password">Salasana</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          placeholder="salasana"
+        />
+        <label for="password">Sähköposti</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          placeholder="newuser@example.com"
+        />
+        <input
+          name="submit"
+          type="submit"
+          value="Rekisteröidy"
+          class="postuser"
+        />
+      </form>
+      <button id="showLogin">Minulla on jo käyttäjä</button>
+    </div>
+  </div>
+
+  </body>
 </html>
