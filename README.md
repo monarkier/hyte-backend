@@ -20,7 +20,7 @@ Sovellus tarjoaa käyttäjille mahdollisuuden hallita unipäiväkirjaa, treenip�
 
  - [Sovellus](terveyspaivakirja.norwayeast.cloudapp.azure.com)
  - [API](terveyspaivakirja.norwayeast.cloudapp.azure.com/api)
- - [API-dokumentaatio]()
+ - [API-dokumentaatio](./API_DOCS.md)
 
 
 ## Tietokanta
