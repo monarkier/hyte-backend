@@ -5,7 +5,7 @@ Tämä API tarjoaa pääsyn päiväkirjasovelluksen tietoihin, kuten käyttäjii
 
 ### Base URL
 ```
-http://localhost:3000/api
+https://terveyspaivakirja.norwayeast.cloudapp.azure.com/api
 ```
 
 ## Autentikointi
