@@ -18,7 +18,7 @@ Sovellus tarjoaa käyttäjille mahdollisuuden hallita unipäiväkirjaa, treenip�
 ![Asetuksetnäyttö](./screenshots/user_info.png)
 ## Linkit
 
- - [Sovellus](https://erveyspaivakirja.norwayeast.cloudapp.azure.com)
+ - [Sovellus](https://terveyspaivakirja.norwayeast.cloudapp.azure.com)
  - [API](https/terveyspaivakirja.norwayeast.cloudapp.azure.com/api)
  - [API-dokumentaatio](./API_DOCS.md)
 
