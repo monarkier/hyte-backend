@@ -1,3 +1,6 @@
+# Testaus
+
+ - [Testauksen tehtävät](tehtavat/README.md)
 
 # Päiväkirja Sovellus
 
