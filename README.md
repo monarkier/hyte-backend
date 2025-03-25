@@ -1,6 +1,6 @@
 # Testaus
 
- - [Testauksen tehtävät](tehtavat/README.md)
+ - [Testauksen tehtävät](public/tehtavat/README.md)
 
 # Päiväkirja Sovellus
 
@@ -50,7 +50,7 @@ Tietokanta on rakennettu **MySQL**:llä, ja se sisältää seuraavat taulut:
 - Mielialapäiväkirjan merkinnät (luonti, näyttäminen)
 ## Tiedossa olevat ongelmat
 -  Rekisteröityminen ei anna tokenia
--  Käyttäjän poistaminen ei toimi
+-  Käyttäjän poistaminen ei toiminut aiemmin, mutta nyt toimii
 ## Referenssit ja lähteet
 - [Express.js](https://expressjs.com/)
 - [MySQL](https://www.mysql.com/)
