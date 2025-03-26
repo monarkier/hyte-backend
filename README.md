@@ -1,6 +1,6 @@
 # Testaus
 
- - [Testauksen tehtävät](public/tehtavat/README.md)
+ - [Testauksen tehtävät](./public/tehtavat/README.md)
 
 # Päiväkirja Sovellus
 
